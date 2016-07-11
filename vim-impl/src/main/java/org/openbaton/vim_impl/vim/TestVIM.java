@@ -33,6 +33,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -129,7 +130,7 @@ public class TestVIM extends Vim {
     public Future<VNFCInstance> allocate(VimInstance vimInstance, VirtualDeploymentUnit vdu, VirtualNetworkFunctionRecord virtualNetworkFunctionRecord, VNFComponent vnfComponent, String userdata, Map<String, String> floatingIps) throws VimDriverException, VimException {
         log.trace("Initializing " + vimInstance);
         try {
-            HashSet<String> networks = new HashSet<>();
+            List<String> networks = new ArrayList<>();
             networks.add("network_id");
             HashSet<String> securityGroups = new HashSet<>();
             securityGroups.add("secGroup_id");
@@ -141,11 +142,12 @@ public class TestVIM extends Vim {
             vnfcInstance.setVim_id(vimInstance.getId());
 
             if (vnfcInstance.getConnection_point() == null)
-                vnfcInstance.setConnection_point(new HashSet<VNFDConnectionPoint>());
+                vnfcInstance.setConnection_point(new ArrayList<VNFDConnectionPoint>());
 
             for (VNFDConnectionPoint connectionPoint : vnfComponent.getConnection_point()) {
                 VNFDConnectionPoint connectionPoint_new = new VNFDConnectionPoint();
                 connectionPoint_new.setVirtual_link_reference(connectionPoint.getVirtual_link_reference());
+                connectionPoint_new.setOrderId(connectionPoint.getOrderId());
                 connectionPoint_new.setType(connectionPoint.getType());
                 vnfcInstance.getConnection_point().add(connectionPoint_new);
             }

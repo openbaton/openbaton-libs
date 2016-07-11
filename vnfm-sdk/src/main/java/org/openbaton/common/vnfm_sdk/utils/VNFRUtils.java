@@ -167,10 +167,11 @@ public class VNFRUtils {
             HashSet<VNFComponent> vnfComponents = new HashSet<>();
             for (VNFComponent component : virtualDeploymentUnit.getVnfc()) {
                 VNFComponent component_new = new VNFComponent();
-                HashSet<VNFDConnectionPoint> connectionPoints = new HashSet<>();
+                List<VNFDConnectionPoint> connectionPoints = new ArrayList<>();
                 for (VNFDConnectionPoint connectionPoint : component.getConnection_point()) {
                     VNFDConnectionPoint connectionPoint_new = new VNFDConnectionPoint();
                     connectionPoint_new.setVirtual_link_reference(connectionPoint.getVirtual_link_reference());
+                    connectionPoint_new.setOrderId(connectionPoint.getOrderId());
                     connectionPoint_new.setType(connectionPoint.getType());
                     connectionPoint_new.setFloatingIp(connectionPoint.getFloatingIp());
                     connectionPoints.add(connectionPoint_new);

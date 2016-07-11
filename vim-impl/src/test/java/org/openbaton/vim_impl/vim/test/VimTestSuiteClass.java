@@ -141,7 +141,7 @@ public class VimTestSuiteClass {
         server.setExtId(environment.getProperty("mocked_id"));
         server.setIps(new HashMap<String, List<String>>());
         //TODO use the method launchInstanceAndWait properly
-        when(vimDriverCaller.launchInstanceAndWait(any(VimInstance.class), anyString(), anyString(), anyString(), anyString(), anySet(), anySet(), anyString(), anyMap())).thenReturn(server);
+        when(vimDriverCaller.launchInstanceAndWait(any(VimInstance.class), anyString(), anyString(), anyString(), anyString(), anyList(), anySet(), anyString(), anyMap())).thenReturn(server);
         VimInstance vimInstance = createVIM();
         try {
 

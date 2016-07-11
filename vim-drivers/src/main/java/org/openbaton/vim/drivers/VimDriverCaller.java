@@ -77,7 +77,7 @@ public class VimDriverCaller extends VimDriver {
     }
 
     @Override
-    public Server launchInstance(VimInstance vimInstance, String name, String image, String flavor, String keypair, Set<String> network, Set<String> secGroup, String userData) throws VimDriverException {
+    public Server launchInstance(VimInstance vimInstance, String name, String image, String flavor, String keypair, List<String> network, Set<String> secGroup, String userData) throws VimDriverException {
         List<Serializable> params = new ArrayList<>();
         params.add(vimInstance);
         params.add(name);
@@ -173,7 +173,7 @@ public class VimDriverCaller extends VimDriver {
     }
 
     @Override
-    public Server launchInstanceAndWait(VimInstance vimInstance, String hostname, String image, String extId, String keyPair, Set<String> networks, Set<String> securityGroups, String s, Map<String, String> floatingIps) throws VimDriverException {
+    public Server launchInstanceAndWait(VimInstance vimInstance, String hostname, String image, String extId, String keyPair, List<String> networks, Set<String> securityGroups, String s, Map<String, String> floatingIps) throws VimDriverException {
         List<Serializable> params = new LinkedList<>();
         params.add(vimInstance);
         params.add(hostname);
@@ -198,7 +198,7 @@ public class VimDriverCaller extends VimDriver {
     }
 
     @Override
-    public Server launchInstanceAndWait(VimInstance vimInstance, String hostname, String image, String extId, String keyPair, Set<String> networks, Set<String> securityGroups, String s) throws VimDriverException {
+    public Server launchInstanceAndWait(VimInstance vimInstance, String hostname, String image, String extId, String keyPair, List<String> networks, Set<String> securityGroups, String s) throws VimDriverException {
         List<Serializable> params = new LinkedList<>();
         params.add(vimInstance);
         params.add(hostname);

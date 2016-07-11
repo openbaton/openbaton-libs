@@ -437,7 +437,7 @@ public class GenericVIM extends Vim {
         String image = this.chooseImage(vdu.getVm_image(), vimInstance);
 
         log.info("Finding Networks...");
-        Set<String> networks = new HashSet<String>();
+        List<String> networks = new ArrayList<>();
         for (VNFDConnectionPoint vnfdConnectionPoint : vnfComponent.getConnection_point()) {
             for (Network net : vimInstance.getNetworks())
                 if (vnfdConnectionPoint.getVirtual_link_reference().equals(net.getName()))
@@ -621,11 +621,12 @@ public class GenericVIM extends Vim {
         vnfcInstance.setVc_id(server.getExtId());
         vnfcInstance.setVim_id(vimInstance.getId());
 
-        vnfcInstance.setConnection_point(new HashSet<VNFDConnectionPoint>());
+        vnfcInstance.setConnection_point(new ArrayList<VNFDConnectionPoint>());
 
         for (VNFDConnectionPoint connectionPoint : vnfComponent.getConnection_point()) {
             VNFDConnectionPoint connectionPoint_vnfci = new VNFDConnectionPoint();
             connectionPoint_vnfci.setVirtual_link_reference(connectionPoint.getVirtual_link_reference());
+            connectionPoint_vnfci.setOrderId(connectionPoint.getOrderId());
             connectionPoint_vnfci.setType(connectionPoint.getType());
             for (Map.Entry<String, String> entry : server.getFloatingIps().entrySet())
                 if (entry.getKey().equals(connectionPoint.getVirtual_link_reference()))
