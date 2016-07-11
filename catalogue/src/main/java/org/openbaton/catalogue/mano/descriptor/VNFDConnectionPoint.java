@@ -31,6 +31,7 @@ public class VNFDConnectionPoint extends ConnectionPoint {
      */
     private String virtual_link_reference;
     private String floatingIp;
+    private Integer orderId;
 
     public VNFDConnectionPoint() {
     }
@@ -40,6 +41,7 @@ public class VNFDConnectionPoint extends ConnectionPoint {
         return "VNFDConnectionPoint{" +
                 "floatingIp='" + floatingIp + '\'' +
                 ", virtual_link_reference='" + virtual_link_reference + '\'' +
+                ", orderId='" + orderId + '\'' +
                 '}';
     }
 
@@ -57,5 +59,13 @@ public class VNFDConnectionPoint extends ConnectionPoint {
 
     public void setVirtual_link_reference(String virtual_link_reference) {
         this.virtual_link_reference = virtual_link_reference;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 }

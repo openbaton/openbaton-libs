@@ -171,7 +171,18 @@ public class OpenstackVIM extends GenericVIM {
         String image = this.chooseImage(vdu.getVm_image(), vimInstance);
 
         log.debug("Finding Networks...");
-        Set<String> networks = new HashSet<String>();
+        List<String> networks = new ArrayList<>();
+
+        try {
+            Collections.sort(vnfComponent.getConnection_point(), new Comparator<VNFDConnectionPoint>() {
+                public int compare(VNFDConnectionPoint o1, VNFDConnectionPoint o2) {
+                    Integer obj1 = o1.getOrderId();
+                    Integer obj2 = o2.getOrderId();
+                    return obj1.compareTo(obj2);
+                }
+            });
+        } catch (Exception e){};
+
         for (VNFDConnectionPoint vnfdConnectionPoint : vnfComponent.getConnection_point()) {
             for (Network net : vimInstance.getNetworks())
                 if (vnfdConnectionPoint.getVirtual_link_reference().equals(net.getName()))

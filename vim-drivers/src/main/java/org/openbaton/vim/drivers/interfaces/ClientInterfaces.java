@@ -33,7 +33,7 @@ public interface ClientInterfaces {
      */
     String interfaceVersion = "1.0";
 
-    Server launchInstance(VimInstance vimInstance, String name, String image, String flavor, String keypair, Set<String> network, Set<String> secGroup, String userData) throws VimDriverException;
+    Server launchInstance(VimInstance vimInstance, String name, String image, String flavor, String keypair, List<String> network, Set<String> secGroup, String userData) throws VimDriverException;
 
     List<NFVImage> listImages(VimInstance vimInstance) throws VimDriverException;
 
@@ -43,9 +43,9 @@ public interface ClientInterfaces {
 
     List<DeploymentFlavour> listFlavors(VimInstance vimInstance) throws VimDriverException;
 
-    Server launchInstanceAndWait(VimInstance vimInstance, String hostname, String image, String extId, String keyPair, Set<String> networks, Set<String> securityGroups, String s, Map<String, String> floatingIps) throws VimDriverException;
+    Server launchInstanceAndWait(VimInstance vimInstance, String hostname, String image, String extId, String keyPair, List<String> networks, Set<String> securityGroups, String s, Map<String, String> floatingIps) throws VimDriverException;
 
-    Server launchInstanceAndWait(VimInstance vimInstance, String hostname, String image, String extId, String keyPair, Set<String> networks, Set<String> securityGroups, String s) throws VimDriverException;
+    Server launchInstanceAndWait(VimInstance vimInstance, String hostname, String image, String extId, String keyPair, List<String> networks, Set<String> securityGroups, String s) throws VimDriverException;
 
     void deleteServerByIdAndWait(VimInstance vimInstance, String id) throws VimDriverException;
 
