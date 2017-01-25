@@ -38,11 +38,7 @@ import org.openbaton.catalogue.mano.record.VNFCInstance;
 import org.openbaton.catalogue.mano.record.VNFRecordDependency;
 import org.openbaton.catalogue.mano.record.VirtualLinkRecord;
 import org.openbaton.catalogue.mano.record.VirtualNetworkFunctionRecord;
-import org.openbaton.catalogue.nfvo.Action;
-import org.openbaton.catalogue.nfvo.EndpointType;
-import org.openbaton.catalogue.nfvo.Script;
-import org.openbaton.catalogue.nfvo.VimInstance;
-import org.openbaton.catalogue.nfvo.VnfmManagerEndpoint;
+import org.openbaton.catalogue.nfvo.*;
 import org.openbaton.catalogue.nfvo.messages.*;
 import org.openbaton.catalogue.nfvo.messages.Interfaces.NFVMessage;
 import org.openbaton.catalogue.security.Key;
@@ -338,6 +334,11 @@ public abstract class AbstractVnfm
             allocateResources.setVirtualNetworkFunctionRecord(virtualNetworkFunctionRecord);
             allocateResources.setVimInstances(vimInstanceChosen);
             allocateResources.setKeyPairs(orVnfmInstantiateMessage.getKeys());
+            // getting userdata from the VNF package is present
+            String userDataFromPackage =
+                getUserDataFromPackage(orVnfmInstantiateMessage.getVnfPackage());
+            allocateResources.setUserData(userDataFromPackage);
+
             try {
               virtualNetworkFunctionRecord = executor.submit(allocateResources).get();
               if (virtualNetworkFunctionRecord == null) {
@@ -494,6 +495,17 @@ public abstract class AbstractVnfm
       }
       vnfmHelper.sendToNfvo(VnfmUtils.getNfvErrorMessage(virtualNetworkFunctionRecord, e, nsrId));
     }
+  }
+
+  private String getUserDataFromPackage(VNFPackage vnfPackage) {
+    for (Script script : vnfPackage.getScripts())
+      if (script.getName().equals("userdata")) {
+        String stringUserData = new String(script.getPayload());
+        log.debug(
+            "Got from the package: " + vnfPackage.getName() + " the userdata:\n" + stringUserData);
+        return stringUserData;
+      }
+    return null;
   }
 
   private VNFCInstance getVnfcInstance(
@@ -693,8 +705,18 @@ public abstract class AbstractVnfm
 
     private Map<String, VimInstance> vimInstances;
 
+    private String userData;
+
+    public AllocateResources() {
+      userData = null;
+    }
+
     public VirtualNetworkFunctionRecord getVirtualNetworkFunctionRecord() {
       return virtualNetworkFunctionRecord;
+    }
+
+    public void setUserData(String userData) {
+      this.userData = userData;
     }
 
     public void setVirtualNetworkFunctionRecord(
@@ -706,7 +728,10 @@ public abstract class AbstractVnfm
       NFVMessage response;
       try {
 
-        String userData = getUserData();
+        // if the userdata is null means that in the current VNF package there was
+        // not a script with the name "userdata". Then it tries to load the userdata
+        // specified statically in a file.
+        String userData = this.userData == null ? getUserData() : this.userData;
         log.debug("Userdata sent to NFVO: " + userData);
         response =
             vnfmHelper.sendAndReceive(
