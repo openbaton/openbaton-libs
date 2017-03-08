@@ -17,7 +17,6 @@
 
 package org.openbaton.catalogue.mano.record;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
@@ -157,8 +156,8 @@ public class VirtualNetworkFunctionRecord implements Serializable {
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Configuration provides;
-
-  @JsonIgnore private boolean cyclicDependency;
+  // transient avoid the (de)serialization of this property into JSON
+  private transient boolean cyclicDependency;
   private String packageId;
 
   private String createdAt;
