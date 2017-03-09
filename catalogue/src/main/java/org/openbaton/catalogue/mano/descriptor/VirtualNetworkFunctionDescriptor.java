@@ -91,8 +91,7 @@ public class VirtualNetworkFunctionDescriptor extends NFVEntityDescriptor {
   @Column(nullable = false)
   private String type;
 
-  // transient avoid the (de)serialization of this property into JSON
-  private transient String endpoint;
+  private String endpoint;
   private String vnfPackageLocation;
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -100,8 +99,8 @@ public class VirtualNetworkFunctionDescriptor extends NFVEntityDescriptor {
 
   @ElementCollection(fetch = FetchType.EAGER)
   private Set<String> provides;
-  // transient avoid the (de)serialization of this property into JSON
-  private transient boolean cyclicDependency;
+
+  private boolean cyclicDependency;
 
   private String createdAt;
 

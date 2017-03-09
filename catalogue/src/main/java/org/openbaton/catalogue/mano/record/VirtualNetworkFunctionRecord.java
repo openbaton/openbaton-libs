@@ -156,8 +156,8 @@ public class VirtualNetworkFunctionRecord implements Serializable {
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Configuration provides;
-  // transient avoid the (de)serialization of this property into JSON
-  private transient boolean cyclicDependency;
+
+  private boolean cyclicDependency;
   private String packageId;
 
   private String createdAt;

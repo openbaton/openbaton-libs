@@ -28,8 +28,7 @@ public class Script implements Serializable {
   @Version private int version = 0;
 
   private String name;
-  // transient avoid the (de)serialization of this property into JSON
-  @Lob private transient byte[] payload;
+  @Lob private byte[] payload;
 
   public Script() {}
 
