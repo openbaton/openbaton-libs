@@ -17,8 +17,6 @@
 
 package org.openbaton.catalogue.mano.descriptor;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -93,7 +91,7 @@ public class VirtualNetworkFunctionDescriptor extends NFVEntityDescriptor {
   @Column(nullable = false)
   private String type;
 
-  @JsonIgnore private String endpoint;
+  private String endpoint;
   private String vnfPackageLocation;
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -102,7 +100,7 @@ public class VirtualNetworkFunctionDescriptor extends NFVEntityDescriptor {
   @ElementCollection(fetch = FetchType.EAGER)
   private Set<String> provides;
 
-  @JsonIgnore private boolean cyclicDependency;
+  private boolean cyclicDependency;
 
   private String createdAt;
 
@@ -210,7 +208,6 @@ public class VirtualNetworkFunctionDescriptor extends NFVEntityDescriptor {
     return endpoint;
   }
 
-  @JsonProperty(required = true)
   public void setEndpoint(String endpoint) {
     this.endpoint = endpoint;
   }
@@ -236,7 +233,6 @@ public class VirtualNetworkFunctionDescriptor extends NFVEntityDescriptor {
     this.connection_point = connection_point;
   }
 
-  @JsonIgnore
   public Set<VNFDConnectionPoint> getVNFDConnection_point() {
     Set<VNFDConnectionPoint> res = new HashSet<>();
     for (ConnectionPoint cp : connection_point) res.add((VNFDConnectionPoint) cp);
