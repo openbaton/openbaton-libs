@@ -87,6 +87,7 @@ public class MonitoringPluginCaller extends MonitoringPlugin {
     pluginCaller.close();
   }
 
+  /*
   public static void main(String[] args)
       throws IOException, TimeoutException, NotFoundException, ExecutionException,
           InterruptedException {
@@ -101,6 +102,7 @@ public class MonitoringPluginCaller extends MonitoringPlugin {
         hosts.add("hostname1");
         hosts.add("hostname2");
         return null /* new MonitoringPluginCaller("zabbix").getMeasurementResults(hosts, new ArrayList<String>(), "")*/;
+        /*
       }
     }
 
@@ -115,7 +117,7 @@ public class MonitoringPluginCaller extends MonitoringPlugin {
     System.out.println("1st call");
     System.out.println(fut1.get());
     System.out.println("Time ---> " + (new Date().getTime() - time) / 1000);
-  }
+  }*/
 
   @Override
   public String subscribeForFault(AlarmEndpoint filter) throws MonitoringException {

@@ -78,15 +78,15 @@ public class RabbitManager {
     HttpResponse response = httpclient.execute(httpGet);
     HttpEntity entity = response.getEntity();
 
-    InputStreamReader inputStreamReader = new InputStreamReader(entity.getContent());
-
-    JsonArray array = gson.fromJson(inputStreamReader, JsonArray.class);
-    if (array != null)
-      for (JsonElement queueJson : array) {
-        String name = queueJson.getAsJsonObject().get("name").getAsString();
-        result.add(name);
-        log.trace("found queue: " + name);
-      }
+    try(InputStreamReader inputStreamReader = new InputStreamReader(entity.getContent())){
+      JsonArray array = gson.fromJson(inputStreamReader, JsonArray.class);
+      if (array != null)
+        for (JsonElement queueJson : array) {
+          String name = queueJson.getAsJsonObject().get("name").getAsString();
+          result.add(name);
+          log.trace("found queue: " + name);
+        }
+    }
     //TODO check for errors
     log.trace("found queues: " + result.toString());
     return result;
@@ -267,7 +267,8 @@ public class RabbitManager {
     return factory;
   }
 
+  /*
   public static void main(String[] args) throws IOException {
     System.out.println(getQueues("localhost", "admin", "openbaton", "/", 5672));
-  }
+  }*/
 }
